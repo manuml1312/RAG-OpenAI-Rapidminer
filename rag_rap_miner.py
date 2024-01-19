@@ -45,7 +45,7 @@ import requests
 from io import BytesIO
 from datasets import Dataset
 # Cell 1: Import necessary libraries and modules
-
+import os
 import re
 #from langchain.document_loaders import DataFrameLoader
 from langchain.text_splitter import CharacterTextSplitter
@@ -56,6 +56,7 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain_openai import OpenAI
 #
 # Function to split text into equal parts
+openai_api_key=os.get_environ("OpenAI_Key")
 def split_into_equal_parts(text, num_parts=10):
     total_length = len(text)
     part_length = total_length // num_parts
@@ -81,14 +82,13 @@ def load_llm(df):
 
   text_splitter = CharacterTextSplitter(chunk_size=2048, chunk_overlap=256,length_function=len,is_separator_regex=False)
   docs = text_splitter.split_documents(documents)
-  embeddings = OpenAIEmbeddings(openai_api_key="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")
+  embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
   vectorstore_hf = FAISS.from_documents(docs, embeddings)
   return vectorstore_hf
 
 # Cell 3: Set parameters
 def rm_main(data,macros):
   prompt = macros['prompt']
-#  model = "gpt-3.5-turbo"
   system_prompt="With the help of the retrieved information,answer the user queries accordingly.If you do not know the answer say so.Do not hallucinate and create answers you do not know."
 
 # Cell 4: Prepare data
@@ -112,7 +112,7 @@ def rm_main(data,macros):
         end = match.end()
         input_string = input_string[:start] + example[column_name[0]] + input_string[end:]
 
-    llm = OpenAI(temperature=0,max_tokens=512, openai_api_key="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")
+    llm = OpenAI(temperature=0,max_tokens=512, openai_api_key=openai_api_key)
     chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore_hf.as_retriever())
     output = chain.invoke({"question": input_string}, return_only_outputs=True)
     return output['answer']
