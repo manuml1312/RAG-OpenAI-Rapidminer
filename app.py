@@ -21,7 +21,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
 #   st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
   
 
-if prompt :=st.text_input("How can i help you today?",placeholder="Your query here",disabled= not documents):
+if prompt :=st.text_input("How can i help you today?",placeholder="Your query here"):
   prompt="Provide the citations and elucidate the concepts of"+str(prompt)+"Include detailed information from relevant sections and sub-sections to ensure a comprehensive response."
   st.session_state.messages.append({"role": "user", "content": prompt})
   myinput = pd.DataFrame({'prompt':prompt})
