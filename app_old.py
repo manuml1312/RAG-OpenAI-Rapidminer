@@ -32,7 +32,7 @@ password = 'demo_rapidminer'
   
 
 if prompt :=st.text_input("How can i help you today?",placeholder="Your query here"):
-  prompt="Retrieve detailed information with citations on the specified topic,that is {prompt}.Focus on relevant concepts from the most pertinent sections and sub-sections, presenting the response in concise and clear paragraphs to avoid unnecessary text."
+  prompt="Provide the citations and elucidate the concepts of"+str(prompt)+"Include detailed information from relevant sections and sub-sections to ensure a comprehensive response."
   st.session_state.messages.append({"role": "user", "content": prompt})
   inputs={ "data":[{"prompt":prompt}]}
 
