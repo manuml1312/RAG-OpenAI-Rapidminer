@@ -5,7 +5,7 @@ import pandas as pd
 import json
 import requests
 
-st.title("📝 Information about Future of Petrochemicals Q & A Chatbot ") 
+st.title("📝 Chatbot - Future of Petrochemicals ") 
 
 with st.sidebar:
   st.write("""Document Name : The Future of Petrochemicals \n 
