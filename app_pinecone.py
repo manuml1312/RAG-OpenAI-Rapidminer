@@ -65,7 +65,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response = requests.post(url, auth=(username, password),json=myinput)
             response_dict = json.loads(response.text)
       # Extracting the content of the "new_col" key
-            response2 = response_dict['rs'][0]['response']
+            response2 = response_dict['data'][0]['response']
             response3=re.sub(re.escape("\n\n"),"",response2)
             st.write(response3)
             message = {"role": "assistant", "content": response3}
