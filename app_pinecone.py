@@ -23,6 +23,10 @@ pc = Pinecone(api_key=api_key)
 index=pc.Index('genai-petro4')
 supporting_data=pd.read_csv('./supporting_data_website.csv')
 
+url = url
+username = 'demo_rapidminer'
+password = 'demo_rapidminer'
+
 def create_embeddings(text):
     MODEL = 'text-embedding-ada-002'
     res = client.embeddings.create(input=[text], model=MODEL)
@@ -56,8 +60,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Thinking..."):
             response = requests.post(url, auth=(username, password),json=myinput)
             response_dict = json.loads(response.text)
-            # Extracting the content of the "new_col" key
-            response2 = response_dict['data'][0]['new_col']
+      # Extracting the content of the "new_col" key
+            response2 = response_dict['data'][0]['response']
             response3=re.sub(re.escape("\n\n"),"",response2)
             st.write(response3)
             message = {"role": "assistant", "content": response3}
