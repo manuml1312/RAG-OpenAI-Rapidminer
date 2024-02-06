@@ -47,16 +47,18 @@ if query :=st.text_input("How can i help you today?",placeholder="Your query her
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
   prompt="Provide the citations and elucidate about "+str(query)+" ,from the given information. Information:"+str(ret_text)
-  myinput = pd.DataFrame({'prompt':[prompt])
+  myinput = {'prompt':[prompt]}
 
 
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            rm = rapidminer.Server("https://myserver.mycompany.com:8080", username="myrmuser")
-            response = rm.run_process("/home/myrmuser/preprocess", inputs=myinput)
-            response2=re.sub(re.escape("\n\n"),"",response)
-            st.write(response2)
-            message = {"role": "assistant", "content": response2}
+            response = requests.post(url, auth=(username, password),json=myinput)
+            response_dict = json.loads(response.text)
+            # Extracting the content of the "new_col" key
+            response2 = response_dict['data'][0]['new_col']
+            response3=re.sub(re.escape("\n\n"),"",response2)
+            st.write(response3)
+            message = {"role": "assistant", "content": response3}
             st.session_state.messages.append(message)
