@@ -25,7 +25,7 @@ pc = Pinecone(api_key=api_key)
 index=pc.Index('genai-petro4')
 supporting_data=pd.read_csv('./supporting_data_website.csv')
 
-url = url
+url = "http://172.178.125.127/rts/api/v1/services/pinecone/pinecone_version_streamlit"
 username = 'demo_rapidminer'
 password = 'demo_rapidminer'
 
