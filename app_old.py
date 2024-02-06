@@ -18,10 +18,12 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     
 
 
-base_url = "http://172.214.107.102/rts/api/v1/services"
-endpoint = "/webapp_demo_ff/rag_based_openai_context_prompt"
+# base_url = "http://172.214.107.102/rts/api/v1/services"
+# endpoint = "/webapp_demo_ff/rag_based_openai_context_prompt"
 
-url = base_url + endpoint
+url=.....
+
+url = url
 username = 'demo_rapidminer'
 password = 'demo_rapidminer'
 
