@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from openai import OpenAI
 import re
-import streamlit
+import streamlit as st
 
 st.title("📝 Information about Future of Petrochemicals Q & A Chatbot ") 
 
