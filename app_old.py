@@ -5,11 +5,11 @@ import pandas as pd
 import json
 import requests
 
-st.title("📝 Chatbot - Future of Petrochemicals ") 
+st.title("📝 Chatbot - SABIC Materials Q & A ") 
 
 with st.sidebar:
-  st.write("""Document Name : The Future of Petrochemicals \n 
-  Document Link: https://iea.blob.core.windows.net/assets/bee4ef3a-8876-4566-98cf-7a130c013805/The_Future_of_Petrochemicals.pdf""")
+  st.write("""Document Name : SABIC Materials \n 
+  Document Source: SABIC Website""")
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
