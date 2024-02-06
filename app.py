@@ -1,30 +1,60 @@
-import streamlit as st 
+from pinecone import Pinecone
 import os
-import rapidminer 
 import pandas as pd
+from openai import OpenAI
+import re
+import streamlit
 
 st.title("📝 Information about Future of Petrochemicals Q & A Chatbot ") 
 
 with st.sidebar:
-  st.write("""Document Name : The Future of Petrochemicals \n 
-  Document Link: https://iea.blob.core.windows.net/assets/bee4ef3a-8876-4566-98cf-7a130c013805/The_Future_of_Petrochemicals.pdf""")
+  st.write("""Document Name : SABIC Materials Q & A Chatbot \n 
+  Document Source: Material data scraped from SABIC website""")
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
         {"role": "assistant", "content": "Mention your queries!"}
     ]
-    
-
-# if "chat_engine" not in st.session_state.keys():# Initialize the chat engine
-#   index = VectorStoreIndex.from_documents(documents, service_context=service_context)
-#   index.storage_context.persist()
-#   st.session_state.chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True)
   
+
+
+api_key=st.secrets.pinecone_api_key
+openai_api_key=st.secrets.openai_api_key
+
+client=OpenAI(api_key=openaiapi_key)
+pc = Pinecone(api_key=api_key)
+index=pc.Index('genai-petro4')
+
 
 if prompt :=st.text_input("How can i help you today?",placeholder="Your query here"):
   prompt="Provide the citations and elucidate the concepts of"+str(prompt)+"Include detailed information from relevant sections and sub-sections to ensure a comprehensive response."
   st.session_state.messages.append({"role": "user", "content": prompt})
   myinput = pd.DataFrame({'prompt':prompt})
+
+def create_embeddings(text):
+    MODEL = 'text-embedding-ada-002'
+    res = client.embeddings.create(input=[text], model=MODEL)
+    return dict(dict(res)['data'][0])['embedding']
+
+
+def index_query(index_name,query,supporting_df,top_k_retrieves=3):
+    ids=[]
+    ret_text=""
+    rets=index_name.query(
+        vector=create_embeddings(query),
+        top_k=top_k_retrieves,
+        include_metadata=True)
+    
+    for i in range(len(rets['matches'])):
+        ids.append(rets['matches'][i]['id'])
+    for i in ids:
+        ret_text=ret_text + str(supporting_df['text'][[supporting_df.index[supporting_df['ids'] == str(i)]][0][0]])
+    return pd.DataFrame({'content':[ret_text]})
+
+supporting_data=pd.read_csv('./supporting_data_website.csv')
+
+ret_text=index_query(index,query,supporting_data,3)
+
 
 
 # If last message is not from assistant, generate a new response
