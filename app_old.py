@@ -8,8 +8,8 @@ import requests
 st.title("📝 Chatbot - SABIC Materials Q & A ") 
 
 with st.sidebar:
-  st.write("""Document Name : SABIC Materials \n 
-  Document Source: SABIC Website""")
+  st.write("""Document Name : SABIC Materials Information \n 
+  Document Context: The context is derived from the material data avaialable at the SABIC official page.""")
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
