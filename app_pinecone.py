@@ -19,6 +19,8 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
 api_key=st.secrets.pinecone_api_key
 openai_api_key=st.secrets.openai_api_key
 
+client=OpenAI(api_key=openai_api_key)
+
 pc = Pinecone(api_key=api_key)
 index=pc.Index('genai-petro4')
 supporting_data=pd.read_csv('./supporting_data_website.csv')
