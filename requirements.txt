@@ -5,5 +5,3 @@ rapidminer
 pinecone-client
 openai
 re
-os
-requests
