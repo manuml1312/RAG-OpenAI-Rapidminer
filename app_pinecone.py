@@ -40,7 +40,7 @@ def index_query(index_name,query,supporting_df,top_k_retrieves=3):
         ids.append(rets['matches'][i]['id'])
     for i in ids:
         ret_text=ret_text + str(supporting_df['text'][[supporting_df.index[supporting_df['ids'] == str(i)]][0][0]])
-    return pd.DataFrame({'content':[ret_text]})
+    return ret_text
 
 
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
