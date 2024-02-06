@@ -7,10 +7,10 @@ import streamlit as st
 import requests
 import json
 
-st.title("📝 Information about Future of Petrochemicals Q & A Chatbot ") 
+st.title("📝 Chatbot - SABIC Materials Q & A ") 
 
 with st.sidebar:
-  st.write("""Document Name : SABIC Materials Q & A Chatbot \n 
+  st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
   Document Source: Material data scraped from SABIC website""")
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
