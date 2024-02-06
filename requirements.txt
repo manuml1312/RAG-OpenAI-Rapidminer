@@ -2,3 +2,8 @@ pandas
 numpy
 streamlit
 rapidminer
+pinecone-client
+openai
+re
+os
+requests
