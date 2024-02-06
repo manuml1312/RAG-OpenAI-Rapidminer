@@ -7,7 +7,7 @@ import streamlit as st
 import requests
 import json
 
-st.title("📝 Chatbot - SABIC Materials Q & A ") 
+st.title("📝 Chatbot - SABIC Materials ") 
 
 with st.sidebar:
   st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
