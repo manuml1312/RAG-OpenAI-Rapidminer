@@ -4,6 +4,7 @@ import pandas as pd
 from openai import OpenAI
 import re
 import streamlit as st
+import requests
 
 st.title("📝 Information about Future of Petrochemicals Q & A Chatbot ") 
 
