@@ -7,7 +7,7 @@ from openai import OpenAI
 
 # Cell 3: Set parameters
 def rm_main(data):
-    client=OpenAI(api_key="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")
+    client=OpenAI(api_key=your_api_key)
     prompt=data['prompt'][0]
     # Use OpenAI GPT for chat completion
     res = client.chat.completions.create(
