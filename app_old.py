@@ -182,7 +182,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
 		response_dict = json.loads(response.text)
             	s=response_dict['data']
             	response2=s[0]['response']
-            	response3=re.sub(re.escape("\n\n"),"",response2)
-		st.write(response3)
-           	message = {"role": "assistant", "content": response3}  
+            	# response3=re.sub(re.escape("\n\n"),"",response2)
+		st.write_stream(response_generator(response2))
+           	message = {"role": "assistant", "content": response2}  
             	st.session_state.messages.append(message)
