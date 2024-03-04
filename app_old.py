@@ -177,13 +177,13 @@ else:
 
 if st.session_state.messages[-1]["role"] != "assistant":  
     with st.chat_message("assistant"):  
-        with st.spinner("Thinking..."):  
-            response = requests.post(url, auth=(username, password),json=myinput)
-            response_dict = json.loads(response.text)
-            s=response_dict['data']
-            response2=s[0]['response']
-            response3=re.sub(re.escape("\n\n"),"",response2)
-	    st.write(response3)
+        with st.spinner("Thinking..."): 
+            	response = requests.post(url, auth=(username, password),json=myinput)
+		response_dict = json.loads(response.text)
+            	s=response_dict['data']
+            	response2=s[0]['response']
+            	response3=re.sub(re.escape("\n\n"),"",response2)
+		st.write(response3)
             #summary = st.write_stream(response_generator(response3))
-            message = {"role": "assistant", "content": response3}  
-            st.session_state.messages.append(message)
+           	message = {"role": "assistant", "content": response3}  
+            	st.session_state.messages.append(message)
