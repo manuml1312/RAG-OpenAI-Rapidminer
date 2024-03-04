@@ -2,5 +2,9 @@ pandas
 numpy
 streamlit
 rapidminer
-pinecone-client
 openai
+langchain_openai
+requests
+lanchain_community
+langchain
+faiss-cpu
