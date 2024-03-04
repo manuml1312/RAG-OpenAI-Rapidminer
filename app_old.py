@@ -141,20 +141,20 @@ embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 df=pd.read_csv('sabic_materials_data.csv')
 content=df['context'][0]
 
-j=0
-while j==0:
-  j=processing(content)
-  vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
-  if vector_store is not None:
+# j=0
+# while j==0:
+j=processing(content)
+vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
+if vector_store is not None:
     if user_query := st.chat_input(placeholder="Your query here"):  
       st.session_state.messages.append({"role": "user", "content": user_query})
       st.chat_message("user").markdown(user_query)
       ret_text=search(user_query,vector_store)
       prompt="Provide the citations and elucidate about "+str(user_query)+" ,from the given information. Information:"+str(ret_text)
       myinput = {"data":[{"prompt":prompt}]}
-  else:
-    st.stop()
-    st.write('Data is processing. Please wait")
+else:
+  st.stop()
+  st.write("Data is processing. Please wait")
     
   
 
