@@ -158,7 +158,7 @@ if vector_store is not None:
       system_prompt="""Answer the user's query in detail with the provided information.Provide a sturctured and organized output whereevr required
 	             Do not generalize the answer and provide specific terms and technical content as provided in the information.
 	            Do not hallucinate,if you dont know the answer say so. The output has to in a very professional way.
-             Do not provide lengty paragraphs,instead break the output into bits of small paragraphs so that its easy to go through.The information to answer the query is:"""+str(ret_text).
+             Do not provide lengty paragraphs,instead break the output into bits of small paragraphs so that its easy to go through.The information to answer the query is:"""+str(ret_text)
       prompt="My query is: "+str(user_query)
       myinput = {"data":[{"prompt":prompt,"system":system_prompt}]}
     else:
