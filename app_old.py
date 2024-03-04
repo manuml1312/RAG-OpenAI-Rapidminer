@@ -166,7 +166,7 @@ if vector_store is not None:
 		Do not generalize the answer; use specific terms and technical content as provided in the information. 
 		Do not hallucinate; if you don't know the answer, state so. Present the output in a professional structured and ordered manne such as point-wise.If the user's query is not related to the provided information,then say the query is out of context.
 		Avoid lengthy paragraphs; break the output into small, digestible small paragraphs for ease of comprehension.The information to answer the query is:"""+str(ret_text)
-      prompt="My query is: "+str(user_query)+".Provide structured and organized output"
+      prompt="My query is: "+str(user_query)+  #".Provide structured and organized output"
       myinput = {"data":[{"prompt":prompt,"system":system_prompt}]}
     else:
       ret_text=''
