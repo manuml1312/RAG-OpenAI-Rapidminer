@@ -94,23 +94,15 @@ def search(user_query, vector_store):
 def response_generator(response):
     comp = response
     if '\n' in comp:
-        lines = comp.split('\n')
-        for i, line in enumerate(lines):
-            words = line.split()
-            for j, word in enumerate(words):
-                if j > 0:
-                    yield " "  # Add space between words
-                yield word
-                time.sleep(0.05)
-            if i < len(lines) - 1:  # Avoid adding extra newline at the end
-                yield "\n"  # Add newline between lines
-    else:
-        words = comp.split()
-        for i, word in enumerate(words):
-            if i > 0:
-                yield " "  # Add space between words
-            yield word
+      for line in comp.split('\n'):
+        for word in line.split():
+            yield word + " "
             time.sleep(0.05)
+        yield "\n"
+    else:
+      for word in comp.split():
+          yield word + " "
+          time.sleep(0.05)
 
 
 def reset_conversation():
