@@ -14,7 +14,6 @@ class Document:
   def __init__(self, page_content, metadata=None):
       self.page_content = page_content
       self.metadata = metadata if metadata is not None else {}
-    
 
 def completion(message_text,tokens):
     completion = client.chat.completions.create(
@@ -80,7 +79,8 @@ def load_vs(text):
 def processing(text):
     vector_store=load_vs(text)
     vector_store.save_local("vector_store_faiss")
-    return None
+    j=1
+    return j
 
 #function to perform vector search on vector store
 def search(user_query, vector_store):  
@@ -141,11 +141,10 @@ embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 df=pd.read_csv('sabic_materials_data.csv')
 content=df['context'][0]
 
-
 processing(content)
 vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
 if vector_store is not None:
-  if user_query := st.chat_input(placeholder="Your query here"):  
+    if user_query := st.chat_input(placeholder="Your query here"):  
       st.session_state.messages.append({"role": "user", "content": user_query})
       st.chat_message("user").markdown(user_query)
       ret_text=search(user_query,vector_store)
