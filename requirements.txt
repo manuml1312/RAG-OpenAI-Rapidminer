@@ -3,8 +3,8 @@ numpy
 streamlit
 rapidminer
 openai
-langchain_openai
+langchain-openai
 requests
-lanchain_community
+langchain-community
 langchain
 faiss-cpu
