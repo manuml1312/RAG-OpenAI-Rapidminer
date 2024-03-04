@@ -123,7 +123,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
 openai_api_key=st.secrets.openai_api_key
 client=OpenAI(api_key=openai_api_key)
 
-url = "http://20.109.59.175/rts/api/v1/services/my_dep/pinecone_version_streamlit"
+url = "http://20.109.59.175/rts/api/v1/services/newupdated/pinecone_version_streamlit"
 username = 'demo_rapidminer'
 password = 'demo_rapidminer'
 
@@ -142,6 +142,8 @@ embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 df=pd.read_csv('sabic_materials_data.csv')
 content=df['context'][0]
 
+
+
 # j=0
 # while j==0:
 j=processing(content)
@@ -152,8 +154,13 @@ if vector_store is not None:
       st.session_state.messages.append({"role": "user", "content": user_query})
       st.chat_message("user").markdown(user_query)
       ret_text=search(user_query,vector_store)
-      prompt="My query is: "+str(user_query)+".The information is:"+str(ret_text)+".Provide a sturctured and organized output"
-      myinput = {"data":[{"prompt":prompt}]}
+      
+      system_prompt=""""""Answer the user's query in detail with the provided information.Provide a sturctured and organized output whereevr required
+	             Do not generalize the answer and provide specific terms and technical content as provided in the information.
+	            Do not hallucinate,if you dont know the answer say so. The output has to in a very professional way.
+             Do not provide lengty paragraphs,instead break the output into bits of small paragraphs so that its easy to go through.The information to asnwer the query is:"""+str(ret_text).
+      prompt="My query is: "+str(user_query)
+      myinput = {"data":[{"prompt":prompt,"system":system_prompt}]}
     else:
       ret_text=''
   
