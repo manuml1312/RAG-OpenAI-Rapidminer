@@ -176,9 +176,10 @@ else:
 
 
 
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+if st.session_state.messages[-1]["role"] != "assistant":  
+    with st.chat_message("assistant"):  
+        with st.spinner("Thinking..."):  
+            # user_query = st.session_state.messages[-1]["content"]
 	    response = requests.post(url,auth=(username,password),json=myinput)
 	    response_dict = json.loads(response.text)
 	    s = response_dict['data']
