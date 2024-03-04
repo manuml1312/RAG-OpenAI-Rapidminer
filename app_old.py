@@ -115,7 +115,7 @@ def response_generator(response):
 def reset_conversation():
   st.session_state.messages=st.session_state.messages = [{"role": "assistant", "content": "Mention your queries!"}]
 
-st.title("📝 Chatbot - SABIC Materials ") 
+st.title("📝 SABIC Chatbot \n Explore our products and services.") 
 
 with st.sidebar:
   st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
