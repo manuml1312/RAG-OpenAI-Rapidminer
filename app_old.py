@@ -183,6 +183,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             s=response_dict['data']
             response2=s[0]['response']
             response3=re.sub(re.escape("\n\n"),"",response2)
-            summary = st.write_stream(response_generator(response3))
-            message = {"role": "assistant", "content": summary}  
+	    st.write(response3)
+            #summary = st.write_stream(response_generator(response3))
+            message = {"role": "assistant", "content": response3}  
             st.session_state.messages.append(message)
