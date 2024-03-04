@@ -153,6 +153,8 @@ if vector_store is not None:
       ret_text=search(user_query,vector_store)
       prompt="Provide the citations and elucidate about "+str(user_query)+" ,from the given information. Information:"+str(ret_text)
       myinput = {"data":[{"prompt":prompt}]}
+    else:
+      st.write('Input your queries')
 else:
   st.stop()
   st.write("Data is processing. Please wait")
