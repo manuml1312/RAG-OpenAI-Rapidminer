@@ -6,6 +6,107 @@ import re
 import streamlit as st
 import requests
 import json
+from langchain.text_splitter import CharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain_openai.embeddings import OpenAIEmbeddings
+
+
+class Document:
+  def __init__(self, page_content, metadata=None):
+      self.page_content = page_content
+      self.metadata = metadata if metadata is not None else {}
+    
+
+def completion(message_text,tokens):
+    completion = client.chat.completions.create(
+      model="gpt-3.5-turbo-0125", # model = "deployment_name"
+      messages = message_text,
+      temperature=0.7,
+      max_tokens=tokens,
+      top_p=0.95,
+      frequency_penalty=0,
+      presence_penalty=0,
+      stop=None
+        )
+    return completion.choices[0].message.content
+
+class Document:
+  def __init__(self, page_content, metadata=None):
+      self.page_content = page_content
+      self.metadata = metadata if metadata is not None else {}
+
+## Cell 2: Load chat data
+def load_vs(text):
+  print('Start LLM Data Enrichment (OpenAI)...')
+  # encoded_text = text.encode('utf-8')
+  total_tokens = round(len(text.split(' '))*1.25)
+  total_splits = round(total_tokens / 512)
+  if total_splits == 0:
+      total_splits=1
+      part_length=total_tokens
+  else:
+     part_length=512
+
+  tokens=[]
+  tokens=text.split(' ')
+
+  parts = [tokens[i:i+part_length] for i in range(0, total_splits, part_length)]
+
+  new_parts=[]
+  for i in parts:
+      j=0
+      x=''
+      for j in i:
+          x+=j+' '
+      new_parts.append(x)
+
+  # text_parts = split_into_equal_parts(text, num_parts=25)
+  documents = []
+  for idx, part in enumerate(new_parts):
+    message_text = [{"role":"system","content":"Perform grammatical corrections wherever required for the user's message and come up with a summary of the same"}]
+    message_text.append({"role":"user","content":part})
+    z=completion(message_text,25)
+    metadata = {'source': 'SABIC Website','summary':z}
+    document = Document(page_content=part, metadata=metadata)
+    documents.append(document)
+
+  text_splitter = CharacterTextSplitter(chunk_size=512, chunk_overlap=64,length_function=len,is_separator_regex=False)
+  docs = text_splitter.split_documents(documents)
+  embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)#"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")
+  vectorstore_hf = FAISS.from_documents(docs, embeddings)
+  return vectorstore_hf
+
+
+@st.cache_data
+def processing(text):
+    vector_store=load_vs(text)
+    vector_store.save_local("vector_store_faiss")
+    return None
+
+#function to perform vector search on vector store
+def search(user_query, vector_store):  
+    docs_db = vector_store.similarity_search(user_query, top_k=5)  
+    text = ''  
+    for i in range(len(docs_db)):  
+        text += docs_db[i].page_content + ' '  
+    return text 
+
+#function to create streaming effect to chat generation
+def response_generator(response):
+    comp = response
+    if '\n' in comp:
+      for line in comp.split('\n'):
+        for word in line.split():
+            yield word + " "
+            time.sleep(0.05)
+        yield "\n"
+    else:
+      for word in comp.split():
+          yield word + " "
+          time.sleep(0.05)
+
+def reset_conversation():
+  st.session_state.messages=st.session_state.messages = [{"role": "assistant", "content": "Mention your queries!"}]
 
 st.title("📝 Chatbot - SABIC Materials ") 
 
@@ -17,58 +118,51 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
     st.session_state.messages = [
         {"role": "assistant", "content": "Mention your queries!"}
     ]
-  
-api_key=st.secrets.pinecone_api_key
+
+# api_key=st.secrets.pinecone_api_key
 openai_api_key=st.secrets.openai_api_key
-
 client=OpenAI(api_key=openai_api_key)
-
-pc = Pinecone(api_key=api_key)
-index=pc.Index('genai-petro4')
-supporting_data=pd.read_csv('./supporting_data_website.csv')
 
 url = "http://172.178.125.127/rts/api/v1/services/pinecone/pinecone_version_streamlit"
 username = 'demo_rapidminer'
 password = 'demo_rapidminer'
 
-def create_embeddings(text):
-    MODEL = 'text-embedding-ada-002'
-    res = client.embeddings.create(input=[text], model=MODEL)
-    return dict(dict(res)['data'][0])['embedding']
 
-def index_query(index_name,query,supporting_df,top_k_retrieves=3):
-    ids=[]
-    ret_text=""
-    rets=index_name.query(
-        vector=create_embeddings(query),
-        top_k=top_k_retrieves,
-        include_metadata=True)
-    
-    for i in range(len(rets['matches'])):
-        ids.append(rets['matches'][i]['id'])
-    for i in ids:
-        ret_text=ret_text + str(supporting_df['text'][[supporting_df.index[supporting_df['ids'] == str(i)]][0][0]])
-    return ret_text
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+      
+with st.sidebar:
+  st.button("Clear Chat",on_click=reset_conversation)
+
+chat_history = st.session_state.messages
+
+embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+
+df=pd.read_csv('./sabic_materials_data.csv')
+content=df['content'][0]
 
 
-if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
-  st.session_state.messages.append({"role": "user", "content": str(query)})
-  ret_text=index_query(index,query,supporting_data,3)
-  prompt="Provide the citations and elucidate about "+str(query)+" ,from the given information. Information:"+str(ret_text)
+processing(content)
+vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
+if vector_store is not None:
+  if user_query := st.chat_input(placeholder="Your query here"):  
+      st.session_state.messages.append({"role": "user", "content": user_query})
+      st.chat_message("user").markdown(user_query)
+
+  ret_text=search(user_query,vector_store)
+  prompt="Provide the citations and elucidate about "+str(user_query)+" ,from the given information. Information:"+str(ret_text)
   myinput = {"data":[{"prompt":prompt}]}
 
 
-# If last message is not from assistant, generate a new response
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+if st.session_state.messages[-1]["role"] != "assistant":  
+    with st.chat_message("assistant"):  
+        with st.spinner("Thinking..."):  
             response = requests.post(url, auth=(username, password),json=myinput)
             response_dict = json.loads(response.text)
             s=response_dict['data']
             response2=s[0]['response']
-      # Extracting the content of the "new_col" key
-            # response2 = response_dict['data'][0]['response']
             response3=re.sub(re.escape("\n\n"),"",response2)
-            st.write(response3)
-            message = {"role": "assistant", "content": response3}
+            summary = st.write_stream(response_generator(response3))
+            message = {"role": "assistant", "content": summary}  
             st.session_state.messages.append(message)
