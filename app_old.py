@@ -138,9 +138,8 @@ chat_history = st.session_state.messages
 
 embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
-df=pd.read_csv('./sabic_materials_data.csv')
+df=pd.read_csv('sabic_materials_data.csv')
 content=df['content'][0]
-
 
 processing(content)
 vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
