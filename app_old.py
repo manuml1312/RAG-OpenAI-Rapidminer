@@ -93,12 +93,12 @@ def search(user_query, vector_store):
 #function to create streaming effect to chat generation
 def response_generator(response):
     comp = response
-    if '\n' in comp:
+    if '\n\n' in comp:
       for line in comp.split('\n'):
         for word in line.split():
             yield word + " "
             time.sleep(0.05)
-        yield "\n"
+        yield "\n\n"
     else:
       for word in comp.split():
           yield word + " "
