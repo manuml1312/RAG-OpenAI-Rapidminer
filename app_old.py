@@ -175,10 +175,9 @@ else:
   st.write("Data is processing. Please wait")
     
 
-if st.session_state.messages[-1]["role"] != "assistant":  
-	
-    	with st.chat_message("assistant"):  
-        	with st.spinner("Thinking..."): 
+if st.session_state.messages[-1]["role"] != "assistant":
+    	with st.chat_message("assistant"):
+        	with st.spinner("Thinking..."):
 			response = requests.post(url, auth=(username, password),json=myinput)
 			response_dict = json.loads(response.text)
 			s=response_dict['data']
