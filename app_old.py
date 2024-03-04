@@ -146,7 +146,8 @@ content=df['context'][0]
 j=processing(content)
 vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
 if vector_store is not None:
-    if user_query := st.chat_input(placeholder="Your query here"):  
+    user_query = st.chat_input(placeholder="Your query here")
+    if user_query:  
       st.session_state.messages.append({"role": "user", "content": user_query})
       st.chat_message("user").markdown(user_query)
       ret_text=search(user_query,vector_store)
