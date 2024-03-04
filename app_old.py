@@ -151,7 +151,7 @@ if vector_store is not None:
       st.session_state.messages.append({"role": "user", "content": user_query})
       st.chat_message("user").markdown(user_query)
       ret_text=search(user_query,vector_store)
-      prompt="Provide the citations and elucidate about "+str(user_query)+" ,from the given information. Information:"+str(ret_text)
+      prompt="My query is: "+str(user_query)+".The information is:"+str(ret_text)+".Provide a sturctured and organized output"
       myinput = {"data":[{"prompt":prompt}]}
     else:
       st.write('Input your queries')
