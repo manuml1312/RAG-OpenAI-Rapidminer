@@ -155,15 +155,15 @@ if vector_store is not None:
       st.chat_message("user").markdown(user_query)
       ret_text=search(user_query,vector_store)
       
-      system_prompt="""Answer the user's query in detail with the provided information.Provide a sturctured and organized output whereevr required
-	             Do not generalize the answer and provide specific terms and technical content as provided in the information.
-	            Do not hallucinate,if you dont know the answer say so. The output has to in a very professional way.
-             Do not provide lengty paragraphs,instead break the output into bits of small paragraphs so that its easy to go through.The information to answer the query is:"""+str(ret_text)
+      system_prompt=""" Answer the user's query in detail using the provided information.
+  		Provide a structured and organized output where necessary. 
+		Do not generalize the answer; use specific terms and technical content as provided in the information. 
+		Do not hallucinate; if you don't know the answer, state so. Present the output in a professional manner. 
+		Avoid lengthy paragraphs; break the output into small, digestible paragraphs for ease of comprehension.The information to answer the query is:"""+str(ret_text)
       prompt="My query is: "+str(user_query)
       myinput = {"data":[{"prompt":prompt,"system":system_prompt}]}
     else:
       ret_text=''
-  
 else:
   st.stop()
   st.write("Data is processing. Please wait")
