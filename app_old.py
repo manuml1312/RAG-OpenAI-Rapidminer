@@ -173,7 +173,6 @@ if vector_store is not None:
 else:
   st.stop()
   st.write("Data is processing. Please wait")
-    
 
 if st.session_state.messages[-1]["role"] != "assistant":
     	with st.chat_message("assistant"):
