@@ -98,7 +98,7 @@ def response_generator(response):
         for word in line.split():
             yield word + " "
             time.sleep(0.05)
-        yield "\n"
+        yield "\n\n"
     else:
       for word in comp.split():
           yield word + " "
@@ -153,12 +153,13 @@ if vector_store is not None:
       ret_text=search(user_query,vector_store)
       prompt="My query is: "+str(user_query)+".The information is:"+str(ret_text)+".Provide a sturctured and organized output"
       myinput = {"data":[{"prompt":prompt}]}
+    else:
+      ret_text=''
+  
 else:
   st.stop()
   st.write("Data is processing. Please wait")
     
-  
-
 
 if st.session_state.messages[-1]["role"] != "assistant":  
     with st.chat_message("assistant"):  
