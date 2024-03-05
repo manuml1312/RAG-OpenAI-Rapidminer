@@ -130,7 +130,7 @@ if "messages" not in st.session_state.keys(): # Initialize the chat messages his
 openai_api_key=st.secrets.openai_api_key
 client=OpenAI(api_key=openai_api_key)
 
-url = "http://20.109.59.175/rts/api/v1/services/newupdated/pinecone_version_streamlit"
+url = "http://20.109.82.248/rts/api/v1/services/newupdated/pinecone_version_streamlit"
 username = 'demo_rapidminer'
 password = 'demo_rapidminer'
 
