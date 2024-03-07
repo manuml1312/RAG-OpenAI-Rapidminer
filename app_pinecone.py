@@ -14,7 +14,7 @@ class Document:
       self.page_content = page_content
       self.metadata = metadata if metadata is not None else {}
     
-
+st.session_state.allow_dangerous_deserialization=True
 def completion(message_text,tokens):
     completion = client.chat.completions.create(
       model="gpt-3.5-turbo-0125", # model = "deployment_name"
