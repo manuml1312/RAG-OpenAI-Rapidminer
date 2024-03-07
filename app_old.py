@@ -9,7 +9,6 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_openai.embeddings import OpenAIEmbeddings
 import time
-from PyPDF2 import PdfReader
 
 class Document:
   def __init__(self, page_content, metadata=None):
