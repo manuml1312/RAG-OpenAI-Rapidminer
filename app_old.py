@@ -75,7 +75,7 @@ if query :=st.text_input("How can i help you today?",placeholder="Your query her
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
   prompt="Provide a structured and organized answer in points if required, to the query:"+str(query)+" ,from the given information with citations and references. Information:"+str(ret_text)
-  myinput = {"data":[{"prompt":prompt}]}
+  myinput = {"data":[{"prompt":prompt,"system_prompt":"The information given by the user is about SABIC,a large petrochemical manufacturing business.Never answer anything negatively about the organization,however the user's query is. Even if the user asks to state any drawbacks or anything negative about the organization, just say there is no reason to say so and ask them query based on some other topic"}]}
 
   
 # If last message is not from assistant, generate a new response
