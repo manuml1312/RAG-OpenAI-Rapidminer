@@ -51,11 +51,23 @@ def index_query(index_name,query,supporting_df,top_k_retrieves=3):
         ret_text=ret_text + str(supporting_df['text'][[supporting_df.index[supporting_df['ids'] == str(i)]][0][0]])
     return ret_text
 
+def response_generator(response):
+    comp = response
+    if '\n' in comp:
+      for line in comp.split('\n'):
+        for word in line.split():
+            yield word + " "
+            time.sleep(0.05)
+        yield "\n"
+    else:
+      for word in comp.split():
+          yield word + " "
+          time.sleep(0.05)
 
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
-  prompt="Answer the question: "+str(query)+" ,from the given information. Information:"+str(ret_text)
+  prompt="Provide a structured and organized answer to the query:"+str(query)+" ,from the given information. Information:"+str(ret_text)
   myinput = {"data":[{"prompt":prompt}]}
 
 
@@ -69,7 +81,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response2=s[0]['response']
       # Extracting the content of the "new_col" key
             # response2 = response_dict['data'][0]['response']
-            response3=re.sub(re.escape("\n\n"),"",response2)
-            st.write(response3)
+            # response3=re.sub(re.escape("\n\n"),"",response2)
+            response=st.write(response_generator(response2))
             message = {"role": "assistant", "content": response3}
             st.session_state.messages.append(message)
