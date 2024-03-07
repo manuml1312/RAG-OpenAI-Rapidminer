@@ -146,8 +146,13 @@ chat_history = st.session_state.messages
 
 embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
-df=pd.read_csv('sabic_materials_data.csv')
-content=df['context'][0]
+text=''
+reader = PdfReader("./The_Future_of_Petrochemicals.pdf")
+number_of_pages = len(reader.pages)
+for i in range(number_of_pages):
+  page = reader.pages[i]
+  text += page.extract_text()
+content=text
 
 
 
