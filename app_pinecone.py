@@ -25,9 +25,6 @@ client=OpenAI(api_key=openai_api_key)
 
 
 pc = Pinecone(api_key=api_key)
-
-@st.cache_data
-
 index=pc.Index('genai-petro-updated')
 supporting_data=pd.read_csv('./supporting_data_petro.csv')
 
