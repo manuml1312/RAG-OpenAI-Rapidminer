@@ -1,3 +1,0 @@
-[runner]
-allow_dangerous_deserialization = True
-enforceSerializableSessionState = True
