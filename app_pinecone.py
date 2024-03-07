@@ -6,6 +6,7 @@ import re
 import streamlit as st
 import requests
 import json
+import time
 
 st.title("📝 Chatbot - SABIC Materials ") 
 
