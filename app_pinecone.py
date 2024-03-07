@@ -76,7 +76,7 @@ with st.sidebar:
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
-  prompt="Provide a structured and organized answer in points if required, to the query:"+str(query)+" ,from the given information. Information:"+str(ret_text)
+  prompt="Provide a structured and organized answer in points if required, to the query:"+str(query)+" ,from the given information with citations and references. Information:"+str(ret_text)
   myinput = {"data":[{"prompt":prompt}]}
 
   
