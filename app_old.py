@@ -70,12 +70,16 @@ def response_generator(response):
 # with st.sidebar:
 #   st.button("Clear Chat",on_click=reset_conversation)
 
+system="""The user has shared details about SABIC, a significant player in the petrochemical manufacturing sector. 
+It's important to consistently convey positive information about the organization. 
+Even if the user seeks insights into potential drawbacks or negatives, emphasize a 
+positive outlook and encourage them to explore various use cases or other topics of interest for a more comprehensive discussion"""
 
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
   prompt="Provide a structured and organized answer in points if required, to the query:"+str(query)+" ,from the given information with citations and references. Information:"+str(ret_text)
-  myinput = {"data":[{"prompt":prompt,"system":"The information given by the user is about SABIC,a large petrochemical manufacturing business.Never answer anything negatively about the organization,however the user's query is. Even if the user asks to state any drawbacks or anything negative about the organization, just say there is no reason to say so and ask them query based on some other topic"}]}
+  myinput = {"data":[{"prompt":prompt,"system":system}]}
 
   
 # If last message is not from assistant, generate a new response
