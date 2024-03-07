@@ -78,7 +78,8 @@ Do not provide your own opinions or perspectives.Answer only from the user provi
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
-  prompt="Provide a structured and organized answer to the query:"+str(query)+".Answer in points if required.Form the answer considering the guidelines in the system prompt using the given information.Do not provide your own opinions. Information:"+str(ret_text)
+  prompt="""Provide a structured and organized answer to the query:"+str(query)+".Answer in points if required.Form the answer considering the guidelines in the system prompt using the given information.
+  Do not provide your own opinions.Provide references and citations if present in the information.The Information is:"""+str(ret_text)
   myinput = {"data":[{"prompt":prompt,"system":system}]}
 
   
