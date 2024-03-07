@@ -74,7 +74,7 @@ def load_vs(text):
   vectorstore_hf = FAISS.from_documents(docs, embeddings)
   return vectorstore_hf
 
-
+st.session_state.allow_dangerous_deserialization = True
 @st.cache_data
 def processing(text):
     vector_store=load_vs(text)
