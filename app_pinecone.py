@@ -72,12 +72,14 @@ with st.sidebar:
   st.button("Clear Chat",on_click=reset_conversation)
 
 
+system="""Answer the questions using only the given information and nothing else.Do not hallucinate or provide information that is not given by th user.
+Do not provide your own opinions or perspectives.Answer only from the user provided information and nothing else.Say you dont know the answer if you dont know."""
 
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
-  prompt="Provide a structured and organized answer in points if required, to the query:"+str(query)+" ,from the given information with citations and references. Information:"+str(ret_text)
-  myinput = {"data":[{"prompt":prompt}]}
+  prompt="Provide a structured and organized answer to the query:"+str(query)+".Answer in points if required.Form the answer considering the guidelines in the system prompt using the given information.Do not provide your own opinions. Information:"+str(ret_text)
+  myinput = {"data":[{"prompt":prompt,"system":system}]}
 
   
 # If last message is not from assistant, generate a new response
