@@ -6,6 +6,7 @@ import re
 import streamlit as st
 import requests
 import json
+import time
 
 st.title("📝 Chatbot - SABIC Materials ") 
 
@@ -85,9 +86,6 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response_dict = json.loads(response.text)
             s=response_dict['data']
             response2=s[0]['response']
-      # Extracting the content of the "new_col" key
-            # response2 = response_dict['data'][0]['response']
-            # response3=re.sub(re.escape("\n\n"),"",response2)
             response=st.write(response_generator(response2))
             message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message)
