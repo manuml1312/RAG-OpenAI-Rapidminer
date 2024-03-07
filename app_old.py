@@ -74,7 +74,6 @@ def load_vs(text):
   vectorstore_hf = FAISS.from_documents(docs, embeddings)
   return vectorstore_hf
 
-st.session_state.runner.allow_dangerous_deserialization = True
 @st.cache_data
 def processing(text):
     vector_store=load_vs(text)
@@ -160,6 +159,7 @@ content=df['context'][0]
 # j=0
 # while j==0:
 j=processing(content)
+global st.session_state.allow_dangerous_deserialization = True
 vector_store = FAISS.load_local("vector_store_faiss",embeddings) 
 if vector_store is not None:
     user_query = st.chat_input(placeholder="Your query here")
