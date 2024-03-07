@@ -75,8 +75,10 @@ if query :=st.text_input("How can i help you today?",placeholder="Your query her
   ret_text=index_query(index,query,supporting_data,3)
   prompt="Provide a structured and organized answer to the query:"+str(query)+" ,from the given information. Information:"+str(ret_text)
   myinput = {"data":[{"prompt":prompt}]}
-
-
+j=0
+while j==0:
+  st.button("Clear Chat",on_click=reset_conversation)
+  
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
@@ -91,6 +93,5 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response=st.write(response_generator(response2))
             message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message)
-          
-st.button("Clear Chat",on_click=reset_conversation)
+
 
