@@ -8,7 +8,8 @@ import requests
 import json
 import time
 
-st.title("📝 Chatbot - SABIC Materials ") 
+st.title("📝 Chatbot") 
+st.write("The chatbot is capable of answering the questions on the document, The Future of Petrochemicals)
 
 with st.sidebar:
   st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
