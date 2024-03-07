@@ -8,3 +8,4 @@ requests
 langchain-community
 langchain
 faiss-cpu
+pinecone-client
