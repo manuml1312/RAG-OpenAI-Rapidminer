@@ -84,5 +84,5 @@ if st.session_state.messages[-1]["role"] != "assistant":
             # response2 = response_dict['data'][0]['response']
             # response3=re.sub(re.escape("\n\n"),"",response2)
             response=st.write(response_generator(response2))
-            message = {"role": "assistant", "content": response3}
+            message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message)
