@@ -8,7 +8,7 @@ import json
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_openai.embeddings import OpenAIEmbeddings
-
+from PyPDF2 import PdfReader
 
 class Document:
   def __init__(self, page_content, metadata=None):
@@ -138,8 +138,14 @@ chat_history = st.session_state.messages
 
 embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
-df=pd.read_csv('./sabic_materials_data.csv')
-content=df['content'][0]
+text=''
+reader = PdfReader("./The_Future_of_Petrochemicals.pdf")
+number_of_pages = len(reader.pages)
+for i in range(number_of_pages):
+  page = reader.pages[i]
+  text += page.extract_text()
+# df=pd.read_csv('./sabic_materials_data.csv')
+content=text
 
 
 processing(content)
