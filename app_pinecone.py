@@ -65,6 +65,12 @@ def response_generator(response):
           yield word + " "
           time.sleep(0.05)
 
+chat=st.session_state.messages
+def reset_conv():
+  st.session_state.messages=[]
+if st.button('Reset chat',on_click=reset_conv())
+
+
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
