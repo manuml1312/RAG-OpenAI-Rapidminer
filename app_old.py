@@ -51,13 +51,32 @@ def index_query(index_name,query,supporting_df,top_k_retrieves=3):
     return ret_text
 
 
+def response_generator(response):
+    comp = response
+    if '\n' in comp:
+      for line in comp.split('\n'):
+        for word in line.split():
+            yield word + " "
+            time.sleep(0.05)
+        yield "\n"
+    else:
+      for word in comp.split():
+          yield word + " "
+          time.sleep(0.05)
+
+# def reset_conversation():
+#   st.session_state.messages=st.session_state.messages = [{"role": "assistant", "content": "Mention your queries!"}]
+# with st.sidebar:
+#   st.button("Clear Chat",on_click=reset_conversation)
+
+
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
-  prompt="Provide the citations and elucidate about "+str(query)+" ,from the given information. Information:"+str(ret_text)
+  prompt="Provide a structured and organized answer in points if required, to the query:"+str(query)+" ,from the given information with citations and references. Information:"+str(ret_text)
   myinput = {"data":[{"prompt":prompt}]}
 
-
+  
 # If last message is not from assistant, generate a new response
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
@@ -68,7 +87,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response2=s[0]['response']
       # Extracting the content of the "new_col" key
             # response2 = response_dict['data'][0]['response']
-            response3=re.sub(re.escape("\n\n"),"",response2)
-            st.write(response3)
-            message = {"role": "assistant", "content": response3}
+            # response3=re.sub(re.escape("\n\n"),"",response2)
+            response=st.write(response_generator(response2))
+            message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message)
