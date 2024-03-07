@@ -65,10 +65,9 @@ def response_generator(response):
           yield word + " "
           time.sleep(0.05)
 
-chat=st.session_state.messages
-def reset_conv():
-  st.session_state.messages=[]
-if st.button('Reset chat',on_click=reset_conv())
+def reset_conversation():
+  st.session_state.messages=st.session_state.messages = [{"role": "assistant", "content": "Mention your queries!"}]
+# with st.sidebar:
 
 
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
@@ -92,3 +91,6 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response=st.write(response_generator(response2))
             message = {"role": "assistant", "content": response}
             st.session_state.messages.append(message)
+          
+st.button("Clear Chat",on_click=reset_conversation)
+
