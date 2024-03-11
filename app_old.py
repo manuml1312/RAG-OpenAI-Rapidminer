@@ -7,11 +7,17 @@ import streamlit as st
 import requests
 import json
 import time
-
+from PIL import Image
 
 
 
 st.title("📝 Chatbot - SABIC Materials ") 
+
+def add_logo(logo_path, width, height):
+    """Read and return a resized logo"""
+    logo = Image.open(logo_path)
+    modified_logo = logo.resize((width, height))
+    return modified_logo
 
 st.sidebar.image(add_logo(logo_path="./ssa.jfif", width=50, height=60)) 
 
