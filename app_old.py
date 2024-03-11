@@ -78,11 +78,11 @@ def response_generator(response):
 # with st.sidebar:
 #   st.button("Clear Chat",on_click=reset_conversation)
 
-system="""The user has shared details about SABIC, a significant player in the petrochemical manufacturing sector. 
-It's important to consistently convey positive information about the organization. 
-Even if the user seeks insights into potential drawbacks or negatives, emphasize a 
-positive outlook and encourage them to explore various use cases or other topics of interest for a more comprehensive discussion.
-Do not provide your own opinions or perspectives.Answer only from the user provided information and nothing else.Say you dont know the answer if you dont know."""
+system="""Answer the user's query with the help of the information provided by the user. 
+    It's important to consistently convey positive information about the organization. 
+    Even if the user seeks insights into potential drawbacks or negatives, emphasize a 
+    positive outlook and encourage them to explore various use cases or other topics of interest for a more comprehensive discussion.
+    Do not provide your own opinions or perspectives.Answer only from the user provided information and nothing else.Say you dont know the answer if you dont know."""
 
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
