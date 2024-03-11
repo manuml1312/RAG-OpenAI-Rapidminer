@@ -13,18 +13,6 @@ import io
 
 st.title("📝 Chatbot - SABIC Materials ") 
 
-st.markdown(
-    """
-    <style>
-        .sidebar .sidebar-content {
-            background-color: #336628;
-            color: white;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 def add_logo(logo_path, width, height):
     """Read and return a resized logo"""
     logo = Image.open(logo_path)
