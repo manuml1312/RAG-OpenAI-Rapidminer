@@ -13,7 +13,7 @@ import time
 
 st.title("📝 Chatbot - SABIC Materials ") 
 
-st.sidebar.image(add_logo(logo_path="your/logo/path", width=50, height=60)) 
+st.sidebar.image(add_logo(logo_path="./ssa.jfif", width=50, height=60)) 
 
 with st.sidebar:
   st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
