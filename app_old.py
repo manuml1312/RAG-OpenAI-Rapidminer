@@ -22,8 +22,8 @@ def add_logo(logo_path, width, height):
 st.sidebar.image(add_logo(logo_path="./logo.PNG", width=1250, height=600)) 
 # st.markdown(add_logo(logo_path="./logo.PNG", width=1250, height=600))
 
-with st.sidebar:
-  st.write(""" Document Source: Material data scraped from SABIC website""")
+# with st.sidebar:
+#   st.write(""" Document Source: Material data scraped from SABIC website""")
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
