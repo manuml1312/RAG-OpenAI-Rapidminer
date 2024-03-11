@@ -11,7 +11,6 @@ from PIL import Image
 import base64
 import io
 
-st.title("📝 Sabic Products Chatbot ") 
 
 def add_logo(logo_path, width, height):
     """Read and return a resized logo"""
@@ -19,11 +18,10 @@ def add_logo(logo_path, width, height):
     modified_logo = logo.resize((width, height))
     return modified_logo
 
-st.image(add_logo(logo_path="./logo.PNG", width=1250, height=600)) 
-# st.markdown(add_logo(logo_path="./logo.PNG", width=1250, height=600))
+st.image(add_logo(logo_path="./logo.PNG", width=100, height=60)) 
 
-# with st.sidebar:
-#   st.write(""" Document Source: Material data scraped from SABIC website""")
+
+st.title("📝 Sabic Products Chatbot ") 
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
