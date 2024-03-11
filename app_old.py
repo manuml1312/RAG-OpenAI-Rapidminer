@@ -19,8 +19,8 @@ def add_logo(logo_path, width, height):
     modified_logo = logo.resize((width, height))
     return modified_logo
 
-# st.sidebar.image(add_logo(logo_path="./logo.PNG", width=1250, height=600)) 
-st.markdown(add_logo(logo_path="./logo.PNG", width=1250, height=600))
+st.sidebar.image(add_logo(logo_path="./logo.PNG", width=1250, height=600)) 
+# st.markdown(add_logo(logo_path="./logo.PNG", width=1250, height=600))
 
 with st.sidebar:
   st.write(""" Document Source: Material data scraped from SABIC website""")
