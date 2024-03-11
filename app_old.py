@@ -19,7 +19,7 @@ def add_logo(logo_path, width, height):
     modified_logo = logo.resize((width, height))
     return modified_logo
 
-st.sidebar.image(add_logo(logo_path="./ssa.jfif", width=250, height=60)) 
+st.sidebar.image(add_logo(logo_path="./ssa.jfif", width=250, height=600)) 
 
 with st.sidebar:
   st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
