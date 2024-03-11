@@ -78,16 +78,17 @@ def response_generator(response):
 # with st.sidebar:
 #   st.button("Clear Chat",on_click=reset_conversation)
 
-system="""Answer the user's query with the help of the information provided by the user. 
-    It's important to consistently convey positive information about the organization. 
-    Even if the user seeks insights into potential drawbacks or negatives, emphasize a 
-    positive outlook and encourage them to explore various use cases or other topics of interest for a more comprehensive discussion.
-    Do not provide your own opinions or perspectives.Answer only from the user provided information and nothing else.Say you dont know the answer if you dont know."""
-
 if query :=st.text_input("How can i help you today?",placeholder="Your query here"):
   st.session_state.messages.append({"role": "user", "content": str(query)})
   ret_text=index_query(index,query,supporting_data,3)
-  prompt="Provide a structured and organized answer to the query:"+str(query)+".Answer in points if required.Form the answer considering the guidelines in the system prompt using the given information.Do not provide your own opinions. Information:"+str(ret_text)
+  system="""Answer the user's query with the help of the information provided by the user.
+    Provide a structured and organized answer to the query.Answer in points if required.Form the answer considering the guidelines in the system prompt using the given information.
+    It's important to consistently convey positive information about the organization. 
+    Even if the user seeks insights into potential drawbacks or negatives, emphasize a 
+    positive outlook and encourage them to explore various use cases or other topics of interest for a more comprehensive discussion.
+    Do not provide your own opinions or perspectives.Answer only from the user provided information and nothing else.
+    Say you dont know the answer if you dont know.The information:"""+str(ret_text)
+  prompt="My query:"+str(query)
   myinput = {"data":[{"prompt":prompt,"system":system}]}
 
   
@@ -100,5 +101,5 @@ if st.session_state.messages[-1]["role"] != "assistant":
             s=response_dict['data']
             response2=s[0]['response']
             response=st.write(response_generator(response2))
-            message = {"role": "assistant", "content": response}
-            st.session_state.messages.append(message)
+            # message = {"role": "assistant", "content": response}
+            # st.session_state.messages.append(message)
