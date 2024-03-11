@@ -18,8 +18,7 @@ def add_logo(logo_path, width, height):
     modified_logo = logo.resize((width, height))
     return modified_logo
 
-st.image(add_logo(logo_path="./logo.PNG", width=100, height=60)) 
-
+st.image(add_logo(logo_path="./logo.PNG", width=250, height=100)) 
 
 st.title("📝 Sabic Products Chatbot ") 
 
