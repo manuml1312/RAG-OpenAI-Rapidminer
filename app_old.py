@@ -11,7 +11,7 @@ from PIL import Image
 import base64
 import io
 
-st.title("📝 Chatbot - SABIC Materials ") 
+st.title("📝 Sabic Products Chatbot ") 
 
 def add_logo(logo_path, width, height):
     """Read and return a resized logo"""
