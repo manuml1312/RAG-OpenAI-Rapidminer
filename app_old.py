@@ -13,13 +13,13 @@ from PIL import Image
 
 st.title("📝 Chatbot - SABIC Materials ") 
 
-def add_logo(logo_path, width, height):
-    """Read and return a resized logo"""
-    logo = Image.open(logo_path)
-    modified_logo = logo.resize((width, height))
-    return modified_logo
+# def add_logo(logo_path, width, height):
+#     """Read and return a resized logo"""
+#     logo = Image.open(logo_path)
+#     modified_logo = logo.resize((width, height))
+#     return modified_logo
 
-st.sidebar.image(add_logo(logo_path="./logo.PNG", width=250, height=600)) 
+# st.sidebar.image(add_logo(logo_path="./logo.PNG", width=250, height=600)) 
 
 with st.sidebar:
   st.write("""Document Name : SABIC Materials Information Retrieval Chatbot \n 
